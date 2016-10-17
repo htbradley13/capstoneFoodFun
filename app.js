@@ -1,6 +1,6 @@
 
 // This is the API call to Foursquare
-function getPlaces(category, place){
+function getRequest(category, place){
 	
 	// The parameters we need to pass in our request to Foursquares's API
 	var parameters = { 
@@ -10,13 +10,33 @@ function getPlaces(category, place){
 		near: place,
 		section: category
 	};
-	url = "//api.foursquare.com/v2/venues/explore";
+	url = "https://api.foursquare.com/v2/venues/explore";
 
 	$.getJSON(url, parameters, function(data){
-		showResults(data.items);
+		showResults(data.response.groups[0].items);
 	});
 }
- 
+
+function showResults(results){
+	var html = " ";
+	$.each(results, function(index,value){
+		var venueID = value[index].venue.id;
+		var venueName = value[index].venue.name;
+		html += '<a href="https://api.foursquare.com/v2/venues/' + venueID + '">' + venueName + '</a><br>';
+	});
+	$("#search-results").html(html);
+}
+
+// Document Ready Function 
+$(function(){
+	$("#search-place").submit(function(event){
+		event.preventDefault();
+		var searchCategory = $("#query").val();
+		var searchPlace = $("#query2").val();
+		getRequest(searchCategory, searchPlace);
+	});
+});
+
 	
 
 
