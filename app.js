@@ -22,13 +22,31 @@ function showResults(results){
 	$.each(results, function(index,value){
 		var venueID = value.venue.id;
 		var venueName = value.venue.name;
+		// Put the lat long in a new function?
+		var venueLat = value.venue.location.lat;
+		var venueLong = value.venue.location.long;
 		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
 }
 
+var map;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+       	center: {lat: 39.8282, lng: -98.5795},
+          zoom: 4
+    });
+}
+
+function resultsMap() {
+
+}
+
 // Document Ready Function 
 $(function(){
+	initMap();
+
 	$("#search-place").submit(function(event){
 		event.preventDefault();
 		var searchCategory = $("#query").val();
