@@ -20,9 +20,9 @@ function getRequest(category, place){
 function showResults(results){
 	var html = " ";
 	$.each(results, function(index,value){
-		var venueID = value[index].venue.id;
-		var venueName = value[index].venue.name;
-		html += '<a href="https://api.foursquare.com/v2/venues/' + venueID + '">' + venueName + '</a><br>';
+		var venueID = value.venue.id;
+		var venueName = value.venue.name;
+		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
 }
