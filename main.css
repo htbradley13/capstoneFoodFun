@@ -1,4 +1,25 @@
 /* CSS */
+* {
+	box-sizing: border-box;
+}
+/*
+#list-map {
+	display: inline-block;
+	flex-direction: row;
+	align-items: flex-end;
+	height: 500px;
+	width: 100%;
+}
+*/
 #map {
-	height: 250px;
+	padding: 0;
+	height: 500px;
+	/*width: 75%;*/
+}
+
+#search-results {
+	display: none;
+	padding: 0;
+	width: 25%;
+	height: 100%;
 }

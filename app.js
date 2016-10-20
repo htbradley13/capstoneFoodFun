@@ -1,21 +1,29 @@
 var map;
 var markers = [];
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 39.8282, lng: -98.5795},
-          zoom: 4
-        });
-      }
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 39.8282, lng: -98.5795},
+        zoom: 4
+    });
+}
+
+function resultsMap(lat, long) {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: lat, lng: long},
+        zoom: 12
+    });
+}
 
 // Adds a marker to the map and push to the array.
-      function addMarker(location) {
-        var marker = new google.maps.Marker({
-          position: location, 
-          //label: label, 
-          map: map
-        });
-        markers.push(marker);
-      }
+function addMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        //label: label, 
+        map: map
+    });
+    markers.push(marker);
+}
 
 // This is the API call to Foursquare
 function getRequest(category, place){
@@ -31,6 +39,7 @@ function getRequest(category, place){
 	url = "https://api.foursquare.com/v2/venues/explore";
 
 	$.getJSON(url, parameters, function(data){
+		resultsMap(data.response.geocode.center.lat, data.response.geocode.center.lng)
 		showResults(data.response.groups[0].items);
 	});
 }
@@ -48,13 +57,27 @@ function showResults(results){
 		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
+	$("#search-results").css("display", "inline-block");
 }
+
+// Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+      // Removes the markers from the map, but keeps them in the array.
+      function clearMarkers() {
+        setMapOnAll(null);
+      }
 
 // Document Ready Function 
 $(function(){
 
 	$("#search-place").submit(function(event){
 		event.preventDefault();
+		clearMarkers();
 		var searchCategory = $("#query").val();
 		var searchPlace = $("#query2").val();
 		getRequest(searchCategory, searchPlace);
