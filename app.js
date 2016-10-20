@@ -1,3 +1,21 @@
+var map;
+var markers = [];
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 39.8282, lng: -98.5795},
+          zoom: 4
+        });
+      }
+
+// Adds a marker to the map and push to the array.
+      function addMarker(location) {
+        var marker = new google.maps.Marker({
+          position: location, 
+          //label: label, 
+          map: map
+        });
+        markers.push(marker);
+      }
 
 // This is the API call to Foursquare
 function getRequest(category, place){
@@ -23,29 +41,17 @@ function showResults(results){
 		var venueID = value.venue.id;
 		var venueName = value.venue.name;
 		// Put the lat long in a new function?
-		var venueLat = value.venue.location.lat;
-		var venueLong = value.venue.location.long;
+		var venueLat = Number(value.venue.location.lat);
+		var venueLong = Number(value.venue.location.lng);
+		var location = {lat: venueLat, lng: venueLong};
+		addMarker(location);
 		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
 }
 
-var map;
-
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-       	center: {lat: 39.8282, lng: -98.5795},
-          zoom: 4
-    });
-}
-
-function resultsMap() {
-
-}
-
 // Document Ready Function 
 $(function(){
-	initMap();
 
 	$("#search-place").submit(function(event){
 		event.preventDefault();
