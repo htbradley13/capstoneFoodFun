@@ -81,7 +81,6 @@ $(function(){
 		var searchPlace = $("#query2").val();
 		getRequest(searchCategory, searchPlace);
 		$("#search-results").show();
-		$("#search-results").css("display", "inline-block");
 	});
 });
 
