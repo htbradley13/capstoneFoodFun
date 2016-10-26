@@ -2,24 +2,26 @@
 * {
 	box-sizing: border-box;
 }
-/*
-#list-map {
-	display: inline-block;
-	flex-direction: row;
-	align-items: flex-end;
-	height: 500px;
-	width: 100%;
+
+main, body {
+	position: relative;
 }
-*/
+
+.entry-data {
+	position: absolute;
+	left: 5px;
+	top: 50%;
+
+}
+
 #map {
-	padding: 0;
-	height: 500px;
-	/*width: 75%;*/
+	height: 100vh;
 }
 
 #search-results {
 	display: none;
-	padding: 0;
-	width: 25%;
-	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: #FFFFFF;
 }

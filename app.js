@@ -57,7 +57,6 @@ function showResults(results){
 		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
-	$("#search-results").css("display", "inline-block");
 }
 
 // Sets the map on all markers in the array.
@@ -81,6 +80,8 @@ $(function(){
 		var searchCategory = $("#query").val();
 		var searchPlace = $("#query2").val();
 		getRequest(searchCategory, searchPlace);
+		$("#search-results").show();
+		$("#search-results").css("display", "inline-block");
 	});
 });
 

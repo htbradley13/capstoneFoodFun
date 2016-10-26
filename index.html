@@ -15,34 +15,38 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<form id="search-category">
-			<div class="form-group">
-				<label for="Search Category">Category</label>
-				<select name="Category" id="query" required> 
-				<option>Food</option>
-				<option>Fun</option>
-				</select>
-			</div>
-	</form>
-	<form id="search-place">
-			<div class="form-group">
-				<label for="Search Place">US City</label>
-				<input type="text" id="query2" required> 
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<main>
 		<div id="map">
 
 		</div>
-		<div id="search-results">
-
+		<div class="entry-data">
+			<form id="search-category">
+				<div class="form-group">
+					<label for="Search Category">Category</label>
+					<select name="Category" id="query" required> 
+						<option>Food</option>
+						<option>Fun</option>
+					</select>
+				</div>
+			</form>
+			<form id="search-place">
+				<div class="form-group">
+					<label for="Search Place">US City</label>
+					<input type="text" id="query2" required> 
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
 		</div>
+	</main>
+	<div id="search-results">
+
+	</div>
 
 
 	<!-- JavaScript Sources -->
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 	<script src="app.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQDoOJWWH3haXx-jKkZW6OmN-9SUWvbFI&callback=initMap" async defer>
-    </script>
+	</script>
 	
 </body>
