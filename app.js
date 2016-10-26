@@ -54,7 +54,7 @@ function showResults(results){
 		var venueLong = Number(value.venue.location.lng);
 		var location = {lat: venueLat, lng: venueLong};
 		addMarker(location);
-		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'">' + venueName + '</a><br>';
+		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>';
 	});
 	$("#search-results").html(html);
 }
