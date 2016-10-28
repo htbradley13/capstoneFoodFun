@@ -49,12 +49,16 @@ function showResults(results){
 	$.each(results, function(index,value){
 		var venueID = value.venue.id;
 		var venueName = value.venue.name;
-		// Put the lat long in a new function?
+
+		var rating = value.venue.rating;
+		var priceRange = value.venue.price.currency;
+		var nameType = value.venue.categories[0].name;
+
 		var venueLat = Number(value.venue.location.lat);
 		var venueLong = Number(value.venue.location.lng);
 		var location = {lat: venueLat, lng: venueLong};
 		addMarker(location);
-		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>';
+		html += '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>' + rating + ', ' + priceRange + ', ' + nameType + '<br>';
 	});
 	$("#search-results").html(html);
 }
@@ -73,14 +77,15 @@ function showResults(results){
 
 // Document Ready Function 
 $(function(){
-
 	$("#search-place").submit(function(event){
 		event.preventDefault();
 		clearMarkers();
 		var searchCategory = $("#query").val();
 		var searchPlace = $("#query2").val();
 		getRequest(searchCategory, searchPlace);
+		$("#results-column").show();
 		$("#search-results").show();
+		$("#foursquare-Attribution").show();
 	});
 });
 
