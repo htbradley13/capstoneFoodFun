@@ -79,7 +79,7 @@ function showResults(results){
 		var location = {lat: venueLat, lng: venueLong};
 
 		// Variable used in trial code to try to show info window above map markers
-		content = '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>' + rating + ', ' + priceRange + ', ' + nameType + '<br>';
+		content = '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>' + rating + ', ' + priceRange + ', ' + nameType + '<br><br>';
 
 		addMarker(location, content);
 		html += content;
