@@ -64,7 +64,7 @@ function getRequest(category, place){
 		section: category,
 		venuePhotos: 1
 	};
-	url = "https://api.foursquare.com/v2/venues/explore";
+	url = "//api.foursquare.com/v2/venues/explore";
 
 	$.getJSON(url, parameters, function(data){
 		resultsMap(data.response.geocode.center.lat, data.response.geocode.center.lng)
