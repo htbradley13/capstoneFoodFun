@@ -1,6 +1,8 @@
+// Map and markers variables
 var map;
 var markers = [];
 
+// Initial Google maps page when the page loads
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.8282, lng: -98.5795},
@@ -8,6 +10,7 @@ function initMap() {
     });
 }
 
+// Used as the map when a search is done, and plots markers
 function resultsMap(lat, long) {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: lat, lng: long},
@@ -19,17 +22,19 @@ function resultsMap(lat, long) {
 function addMarker(location, content) {
     var marker = new google.maps.Marker({
         position: location, 
+        // If you want to add a label to the google maps markers, use the below line
         //label: label, 
         map: map
     });
 
-    // Added this code to try to show info when hovering on map marker 
+    // Variables for the info window and marker effects below it
     var contentInfo = content;
 
     var infowindow = new google.maps.InfoWindow({
     	content: contentInfo
     });
 
+    /* This code enables the hover effect, if preferred over the click effect, but you can't click the link to the venue
     marker.addListener('mouseover', function() {
   		infowindow.open(map,marker);
 	});
@@ -37,8 +42,13 @@ function addMarker(location, content) {
     marker.addListener('mouseout', function() {
   		infowindow.close(map,marker);
 	});
-    // end of new trial code
-
+	*/
+	// This allows you to click a marker to see the info window
+	marker.addListener('click', function() {
+  		infowindow.open(map,marker);
+	});
+	
+    // This pushes the marker results to the marker array
     markers.push(marker);
 }
 
@@ -51,7 +61,8 @@ function getRequest(category, place){
 		client_secret: 'NL5SVJXDJQOQ00TVO1ZYT1BEYBSQRYDJJU0UUSO0XIJXGC2Z',
 		v: '20161016',
 		near: place,
-		section: category
+		section: category,
+		venuePhotos: 1
 	};
 	url = "https://api.foursquare.com/v2/venues/explore";
 
@@ -61,25 +72,50 @@ function getRequest(category, place){
 	});
 }
 
+// Function used to pass results through, set variables based on results, and set html to view accordingly
 function showResults(results){
 	var html = " ";
 	var content = " ";
 	$.each(results, function(index,value){
 		var venueID = value.venue.id;
 		var venueName = value.venue.name;
-
 		var rating = value.venue.rating;
-		
-		// Currency is not on all "fun" venues...need "if" function?
-		var priceRange = value.venue.price.currency;
-		var nameType = value.venue.categories[0].name;
+		var priceRange = ""
+		var photo = ""
 
+		// If statement to see if there is a price in the search results and setting variable accordingly
+		if (value.venue.price != undefined) {
+			var priceRange = value.venue.price.currency;
+		}
+		else {
+			var priceRange = 'n/a';
+		}
+
+		// If statement to see if there is a photo, and how to display if so
+		if (value.venue.photos.count >= 1) {
+			var prefix = value.venue.photos.groups[0].items[0].prefix;
+			/*Can use height and width if you want actual size, but that's too big
+			var height = value.venue.photos.groups[0].items[0].height;
+			var width = value.venue.photos.groups[0].items[0].width;
+			*/
+			//Create my own ideal size for thumbnail using width by height pixel dimensions
+			var size = 160 + 'x' + 80;
+			var suffix = value.venue.photos.groups[0].items[0].suffix;
+			//Per API documentation for Foursquare, the below is how to put together an image
+			var photoLink = prefix + size + suffix;
+			var photo = '<img src="' + photoLink + '" alt="Picture">';
+		}
+		else {
+			var photo = 'n/a';
+		}
+
+		var nameType = value.venue.categories[0].name;
 		var venueLat = Number(value.venue.location.lat);
 		var venueLong = Number(value.venue.location.lng);
 		var location = {lat: venueLat, lng: venueLong};
 
-		// Variable used in trial code to try to show info window above map markers
-		content = '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>' + rating + ', ' + priceRange + ', ' + nameType + '<br><br>';
+		// Variable used for search results column, and pop-up marker result div
+		content = '<a href="https://foursquare.com/v/' + venueName + '/' + venueID +'" target="_blank">' + venueName + '</a><br>' + rating + ', ' + priceRange + ', ' + nameType + '<br>' + photo + '<br><br>';
 
 		addMarker(location, content);
 		html += content;
