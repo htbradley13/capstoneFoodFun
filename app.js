@@ -147,7 +147,7 @@ $(function(){
 		$("#search-results").show();
 		$("#foursquare-Attribution").show();
 	});
-});
+}); 
 
 	
 

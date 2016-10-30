@@ -20,6 +20,7 @@ main, body {
 #results-column {
 	display: none;
 	height: 100%;
+	/* The below line created the scroll effect for results column */
 	overflow-y: auto;
 	position: absolute;
 	top: 0;
@@ -27,7 +28,7 @@ main, body {
 	padding: 5px;
 	width: 20%;
 	background-color: #FFFFFF;
-}
+} 
 
 #foursquare-Attribution {
 	display: none;
